@@ -18,6 +18,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,6 +36,11 @@ fun FormIsian(
     jenisK: List<String> = listOf("Laki-Laki", "Perempuan"),
     onSubmitBtnClick: () -> Unit
 ) {
+    // Variabel penampung state ketikan & pilihan radio
+    var textNama by remember { mutableStateOf("") }
+    var textAlamat by remember { mutableStateOf("") }
+    var selectedJK by remember { mutableStateOf("") }
+
     Scaffold(
         modifier = Modifier,
         topBar = {
@@ -49,8 +58,8 @@ fun FormIsian(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             OutlinedTextField(
-                value = "",
-                onValueChange = {},
+                value = textNama,
+                onValueChange = { textNama = it },
                 singleLine = true,
                 modifier = Modifier
                     .padding(top = 20.dp)
@@ -68,8 +77,8 @@ fun FormIsian(
                 jenisK.forEach { item ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         RadioButton(
-                            selected = false,
-                            onClick = {}
+                            selected = (selectedJK == item),
+                            onClick = { selectedJK = item }
                         )
                         Text(text = item)
                     }
@@ -83,8 +92,8 @@ fun FormIsian(
                 color = Color.Red
             )
             OutlinedTextField(
-                value = "",
-                onValueChange = {},
+                value = textAlamat,
+                onValueChange = { textAlamat = it },
                 singleLine = true,
                 modifier = Modifier.width(250.dp),
                 label = { Text(text = "Alamat") }
